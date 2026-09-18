@@ -581,9 +581,61 @@
     border-bottom: 1px dashed var(--border-light);
     margin-bottom: 8px;
   }
+
+/* ── Top navigation ── */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--max-w, 820px);
+  margin: 0 auto;
+  padding: 12px var(--gutter, 16px);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.top-nav a {
+  color: var(--text-muted, #706858);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.top-nav a:hover { color: var(--orange, #D08040); }
+.top-nav .nav-index {
+  font-weight: 600;
+  color: var(--brown, #3E3830);
+}
+.top-nav .nav-prev, .top-nav .nav-next { min-width: 80px; }
+.top-nav .nav-prev { text-align: left; }
+.top-nav .nav-next { text-align: right; }
+.top-nav .nav-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.top-nav .nav-all { font-size: 9px; color: var(--text-muted, #706858); letter-spacing: 0.05em; }
+
+
 </style>
 </head>
 <body>
+<nav class="top-nav">
+  <a href="260629_Rugen-Kust.html" class="nav-prev">
+    <span class="lang-nl">&larr; Campingleven &amp; Kust</span>
+    <span class="lang-en">&larr; Camp Life &amp; Coast</span>
+  </a>
+  <div class="nav-center">
+    <a href="../" class="nav-all">
+      <span class="lang-nl">&larr; alle reizen</span>
+      <span class="lang-en">&larr; all trips</span>
+    </a>
+    <a href="./index.html" class="nav-index">
+      <span class="lang-nl">Rügen 2026</span>
+      <span class="lang-en">Rügen 2026</span>
+    </a>
+  </div>
+  <a href="260705_Rugen-Jasmund.html" class="nav-next">
+    <span class="lang-nl">Fietstocht Jasmund &rarr;</span>
+    <span class="lang-en">Jasmund Bike Tour &rarr;</span>
+  </a>
+</nav>
+
 
 <!-- ═══════ LANGUAGE TOGGLE ═══════ -->
 <div class="lang-toggle" role="radiogroup" aria-label="Taal / Language">
@@ -747,36 +799,7 @@
   </div>
 
   <!-- Gallery: Alter Markt photos -->
-  <details>
-    <summary>
-      <span class="sum-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
-      </span>
-      <span class="lang-nl">Foto's Alter Markt &amp; Rathausdurchgang (4)</span>
-      <span class="lang-en">Photos Alter Markt &amp; Rathausdurchgang (4)</span>
-      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
-    </summary>
-    <div class="details-body">
-      <div class="photo-grid">
-        <figure>
-          <img src="./img/stralsund-artushof-groene-deur.jpg" alt="Groene deur met ruitvormige glasvensters in bakstenen doorgang" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
-          <figcaption><span class="lang-nl">Groene deur met ruitglas in de doorgang bij het Artushof</span><span class="lang-en">Green diamond-paned door in the passage near the Artushof</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-bakstenen-doorgang.jpg" alt="Bakstenen doorgang bij de Nikolaikirche" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Bakstenen doorgang naast de Nikolaikirche: luchtbogen en kinderkopjes</span><span class="lang-en">Brick passage beside the Nikolaikirche: flying buttresses and cobblestones</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-artushof-gevel.jpg" alt="Bakstenen gevel met tuin bij het Artushof" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Bakstenen gevel met voortuintje bij het Artushof</span><span class="lang-en">Brick facade with small garden at the Artushof</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-artushof-gustaaf-adolf.jpg" alt="Bronzen buste van Gustaaf Adolf, 1630" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
-          <figcaption><span class="lang-nl">Bronzen buste van Gustaaf Adolf, 1630</span><span class="lang-en">Bronze bust of Gustavus Adolphus, 1630</span></figcaption>
-        </figure>
-      </div>
-    </div>
-  </details>
+  
 
   <!-- Collapsible: Reformation background -->
   <details>
@@ -899,48 +922,7 @@
   </div>
 
   <!-- Gallery: Nikolaikirche photos -->
-  <details>
-    <summary>
-      <span class="sum-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
-      </span>
-      <span class="lang-nl">Meer foto's Nikolaikirche (7)</span>
-      <span class="lang-en">More photos Nikolaikirche (7)</span>
-      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
-    </summary>
-    <div class="details-body">
-      <div class="photo-grid">
-        <figure>
-          <img src="./img/stralsund-nikolai-schnitzaltar.jpg" alt="Laatgotisch hoogaltaar" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Het Schnitzaltar: verguld kruisigingstafereel met zijpanelen, eind 15e eeuw</span><span class="lang-en">The carved altarpiece: gilded crucifixion scene with side panels, late 15th century</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-nikolai-schip-interieur.jpg" alt="Middenschip Nikolaikirche" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Het middenschip: polychrome bogen, kroonluchter, het altaar in de verte</span><span class="lang-en">The nave: polychrome arches, chandelier, the altar in the distance</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-nikolai-gewelf-orgel.jpg" alt="Gewelf en orgel Nikolaikirche" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Recht omhoog: ribgewelf en orgel, de akoestiek van zevenhonderd jaar</span><span class="lang-en">Straight up: ribbed vault and organ, seven hundred years of acoustics</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-nikolai-vrouw-deur.jpg" alt="Bezoekster bij de kerkdeur" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Bij de kerkdeur: het polychrome interieur achter haar rug</span><span class="lang-en">At the church door: the polychrome interior behind her</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-nikolai-barokdeur-psalm.jpg" alt="Barokke deur met Psalm LXXXIV" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Barokke deur met cherubijnen en opschrift Psalm LXXXIV</span><span class="lang-en">Baroque door with cherubs and inscription Psalm LXXXIV</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-nikolai-nikolaus-tekst.jpg" alt="Der heilige Nikolaus, kalligrafie" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">"Der heilige Nikolaus", kalligrafie op handgeschept papier, nach Anselm Grün</span><span class="lang-en">"Der heilige Nikolaus", calligraphy on handmade paper, after Anselm Grün</span></figcaption>
-        </figure>
-        <figure>
-          <img src="./img/stralsund-nikolai-kruisdrager-buiten.jpg" alt="Houten kruisdrager aan de buitenmuur" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
-          <figcaption><span class="lang-nl">Houten Christus met kruis, buitenmuur, rood-wit gestreept</span><span class="lang-en">Wooden Christ carrying cross, exterior wall, red and white striped</span></figcaption>
-        </figure>
-      </div>
-    </div>
-  </details>
+  
 
   <hr class="divider">
 
@@ -1324,16 +1306,7 @@
   <hr class="divider">
 
   <!-- ════════════ FOOTER NAV ════════════ -->
-  <nav class="day-nav">
-    <a href="./260626_Kamperen-op-Rugen.html">
-      <span class="lang-nl">&larr; Dag 1: Kamperen op Rügen</span>
-      <span class="lang-en">&larr; Day 1: Camping on Rügen</span>
-    </a>
-    <a href="./260630_Eiland-fietstocht.html">
-      <span class="lang-nl">Dag 3: Eiland fietstocht &rarr;</span>
-      <span class="lang-en">Day 3: Island bike tour &rarr;</span>
-    </a>
-  </nav>
+  
 
 </div>
 
