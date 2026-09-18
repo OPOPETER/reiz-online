@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Istanbul 2026 — reiz.online</title>
+  <meta name="description" content="Istanbul, oktober 2026 — dagelijks fotoboek van tien dagen aan de Bosporus.">
+  <style>
+    :root {
+      --bg: #FDFBF7;
+      --bg-card: #FFFFFF;
+      --text: #2C2C2C;
+      --text-muted: #6B6B6B;
+      --accent: #B8860B;
+      --accent-light: #D4A843;
+      --border: #E8E2D6;
+      --shadow: rgba(0, 0, 0, 0.06);
+      --font-serif: 'Georgia', 'Times New Roman', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1A1A17;
+        --bg-card: #242420;
+        --text: #E8E2D6;
+        --text-muted: #9A9A8A;
+        --accent: #D4A843;
+        --accent-light: #E8C06A;
+        --border: #3A3A32;
+        --shadow: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .breadcrumb {
+      padding: 1rem 1rem 0;
+      max-width: 960px;
+      margin: 0 auto;
+      font-size: 0.85rem;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .breadcrumb span { color: var(--text-muted); }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    header .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    header .dates {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .days {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .day-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .day-card {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .day-card:hover {
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+
+    .day-number {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--accent);
+      min-width: 3rem;
+      text-align: center;
+      line-height: 1;
+      padding-top: 0.2rem;
+    }
+
+    .day-info h2 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .day-info .day-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .day-info p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .day-thumb {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 3px;
+      flex-shrink: 0;
+      background: var(--border);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    nav.bottom {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    nav.bottom a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    nav.bottom a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 600px) {
+      .day-card { flex-direction: column; gap: 1rem; }
+      .day-thumb { width: 100%; height: 180px; }
+      .day-number { min-width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="breadcrumb">
+    <a href="../">reiz.online</a> <span>/ Istanbul 2026</span>
+  </div>
+
+  <header>
+    <h1>Istanbul</h1>
+    <div class="subtitle">twee werelden, één stad</div>
+    <div class="dates">8 – 19 oktober 2026</div>
+  </header>
+
+  <main class="days">
+    <div class="day-list" id="days">
+      <!-- AUTO-DAYS-START -->
+      <a class="day-card" href="dag-01.html">
+        <div class="day-number">1</div>
+        <div class="day-info">
+          <h2>Aankomst aan de Bosporus</h2>
+          <div class="day-date">2026-10-08</div>
+          <p>Eerste indrukken van Istanbul: de geur van kastanjes, de roep van de muezzin, en een veerboot over de Gouden Hoorn.</p>
+        </div>
+      </a>
+      <!-- AUTO-DAYS-END -->
+    </div>
+  </main>
+
+  <nav class="bottom">
+    <a href="../">&larr; alle reizen</a>
+  </nav>
+
+  <footer>
+    &copy; 2026 Peter Wierenga
+  </footer>
+</body>
+</html>
