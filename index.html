@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>reiz.online</title>
-  <meta name="description" content="Persoonlijk reisfotoboek — verhalen en foto's van onderweg.">
+  <title>reiz — een beetje anderz weg</title>
+  <meta name="description" content="reiz — een beetje anderz weg. kijken genieten proeven ontmoeten.">
   <style>
     :root {
       --bg: #FDFBF7;
@@ -57,11 +57,22 @@
       margin-bottom: 0.5rem;
     }
 
-    header p {
-      font-size: 0.95rem;
+    header .subtitle-main {
+      font-size: 1.05rem;
       color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
+    }
+
+    header .tagline {
+      font-size: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      font-style: normal;
+    }
+
+    header .tagline em {
       font-style: italic;
-      letter-spacing: 0.02em;
     }
 
     .trips {
@@ -154,7 +165,8 @@
 <body>
   <header>
     <h1>reiz</h1>
-    <p>verhalen en foto's van onderweg</p>
+    <p class="subtitle-main">een beetje anderz weg</p>
+    <p class="tagline"><em>kijken genieten proeven </em>ont<em>moeten</em></p>
   </header>
 
   <main class="trips">
