@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rügen, Stralsund &amp; Wismar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --bg: #D4CABA;
+    --bg-card: #CBC1B0;
+    --bg-warm: #C4BAA8;
+    --text: #2A2520;
+    --text-light: #504A40;
+    --text-muted: #706858;
+    --brown: #3E3830;
+    --brown-line: #5A5040;
+    --icon-dark: #1A1612;
+    --orange: #D08040;
+    --orange-light: #E8A060;
+    --orange-dark: #B06830;
+    --border: #8A7E68;
+    --border-light: #A09480;
+    --max-w: 960px;
+    --gutter: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 17px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── LANGUAGE TOGGLE SYSTEM ── */
+  html[lang="nl"] .lang-en { display: none !important; }
+  html[lang="en"] .lang-nl { display: none !important; }
+
+  .lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(42,37,32,0.15);
+  }
+  .lang-toggle button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    border: none;
+    background: transparent;
+    padding: 8px 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .lang-toggle button:hover { background: var(--bg-warm); }
+  .lang-toggle button.active { background: var(--orange); color: var(--bg); }
+  .lang-toggle .sep { width: 1px; height: 20px; background: var(--border-light); flex-shrink: 0; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    overflow: hidden;
+    background: var(--bg-warm);
+  }
+  .hero-inner {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-inner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero .ph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg-warm);
+    letter-spacing: 0.04em;
+  }
+  .hero-tape {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    width: 80px;
+    height: 26px;
+    background: rgba(208,128,64,0.25);
+    border: 1px dashed var(--orange);
+    transform: rotate(-3deg);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .hero-caption {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 40px var(--gutter) 28px;
+    background: linear-gradient(transparent, rgba(42,37,32,0.7));
+  }
+  .trip-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .trip-label svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--orange-light);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .trip-label svg .accent-fill { fill: var(--orange-light); stroke: none; }
+  .hero h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .hero-sub {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ── STYLE BADGE ── */
+  .style-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 28px 0 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border: 1px dashed var(--border-light);
+    background: var(--bg-card);
+  }
+  .style-badge svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--icon-dark);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .style-badge svg .accent-fill { fill: var(--orange); stroke: none; }
+
+  /* ── TRIP META ── */
+  .trip-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    padding: 14px 0 22px;
+    border-bottom: 1px dashed var(--border-light);
+    margin-bottom: 28px;
+  }
+  .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.04em;
+  }
+  .meta-item svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--icon-dark);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+  .meta-item svg .accent-fill { fill: var(--orange); stroke: none; }
+  .meta-item svg .accent { stroke: var(--orange); }
+
+  /* ── TRIP INTRO ── */
+  .trip-intro {
+    margin-bottom: 32px;
+  }
+  .trip-intro p {
+    font-size: 1rem;
+    line-height: 1.76;
+    color: var(--text-light);
+    font-style: italic;
+    max-width: 720px;
+  }
+
+  /* ── DAY GRID ── */
+  .day-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 600px) {
+    .day-grid { grid-template-columns: 1fr; }
+  }
+
+  .day-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--bg-card);
+    border: 1px dashed var(--border-light);
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .day-card:hover {
+    box-shadow: 0 4px 16px rgba(42,37,32,0.15);
+    border-color: var(--orange);
+  }
+
+  .day-card-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--bg-warm);
+    position: relative;
+  }
+  .day-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .day-card-img .ph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .day-card-body {
+    padding: 14px 16px 18px;
+  }
+  .day-card-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 2px;
+  }
+  .day-card-num svg {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: var(--orange);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .day-card-num svg .accent-fill { fill: var(--orange); stroke: none; }
+
+  .day-card-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .day-card h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .day-card-summary {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+
+  /* ── COLLAPSIBLES ── */
+  details {
+    margin: 24px 0;
+    border: 1px dashed var(--border-light);
+    background: var(--bg-card);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    list-style: none;
+    user-select: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .sum-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--icon-dark);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+  .sum-icon svg .accent-fill { fill: var(--orange); stroke: none; }
+  .sum-icon svg .accent { stroke: var(--orange); }
+  .chevron {
+    margin-left: auto;
+    transition: transform 0.25s;
+  }
+  .chevron svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--text-muted);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  details[open] > summary .chevron { transform: rotate(180deg); }
+  .details-body {
+    padding: 0 16px 18px;
+    overflow: hidden;
+  }
+
+  /* ── MAP PLACEHOLDER ── */
+  .map-placeholder {
+    width: 100%;
+    min-height: 240px;
+    background: var(--bg-warm);
+    border: 1px dashed var(--border-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+  .map-placeholder svg {
+    width: 48px;
+    height: 48px;
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.6;
+  }
+  .map-placeholder svg .accent { stroke: var(--orange); opacity: 0.5; }
+  .map-placeholder svg .accent-fill { fill: var(--orange); stroke: none; opacity: 0.5; }
+
+  /* ── ROUTE LEGEND ── */
+  .route-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .route-stop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--bg-warm);
+    border: 1px dashed var(--border-light);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.03em;
+  }
+  .route-stop .stop-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: 1px dashed var(--orange);
+    color: var(--orange);
+    font-size: 0.62rem;
+    flex-shrink: 0;
+  }
+  .route-stop .stop-date {
+    color: var(--text-muted);
+    min-width: 80px;
+  }
+
+  /* ── TRIP STATS ── */
+  .trip-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px dashed var(--border-light);
+    border-bottom: 1px dashed var(--border-light);
+    margin: 28px 0;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--orange);
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  @media (max-width: 480px) {
+    .trip-stats { gap: 18px; }
+    .stat-num { font-size: 1.4rem; }
+  }
+
+  /* ── FOOTER NAV ── */
+  .trip-nav {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0 48px;
+  }
+  .trip-nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--orange);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    padding: 10px 20px;
+    border: 1px dashed var(--border-light);
+    background: var(--bg-card);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .trip-nav a:hover {
+    background: var(--bg-warm);
+    border-color: var(--orange);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px dashed var(--border-light);
+    margin: 28px 0;
+  }
+
+  /* ── PLACEHOLDER ── */
+  .ph {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LANGUAGE TOGGLE ═══════════ -->
+<div class="lang-toggle" role="radiogroup" aria-label="Taal / Language">
+  <button id="btn-nl" class="active" aria-pressed="true" onclick="setLang('nl')">NL</button>
+  <span class="sep"></span>
+  <button id="btn-en" aria-pressed="false" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-tape"></div>
+  <div class="hero-inner">
+    <div class="ph"><span class="lang-nl">Hero-foto volgt</span><span class="lang-en">Hero photo to follow</span></div>
+    <div class="hero-caption">
+      <div class="trip-label">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+        JOURNEY 001 — 2026.06.26 → 2026.07.02
+      </div>
+      <h1><span class="lang-nl">Rügen, Stralsund &amp; Wismar</span><span class="lang-en">Rügen, Stralsund &amp; Wismar</span></h1>
+      <div class="hero-sub"><span class="lang-nl">Mecklenburg-Vorpommern, Duitsland</span><span class="lang-en">Mecklenburg-Vorpommern, Germany</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STYLE BADGE + TRIP META ═══════════ -->
+<div class="container">
+
+  <div class="style-badge">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+    FIELD NOTES
+  </div>
+
+  <div class="trip-meta">
+    <span class="meta-item">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18"/><path d="M8 2v4M16 2v4"/><circle cx="12" cy="14" r="1.5" class="accent-fill"/></svg>
+      26 jun — 2 jul 2026
+    </span>
+    <span class="meta-item">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8z"/><circle cx="12" cy="10" r="2.5" class="accent"/></svg>
+      <span class="lang-nl">Mecklenburg-Vorpommern</span><span class="lang-en">Mecklenburg-Vorpommern</span>
+    </span>
+    <span class="meta-item">
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
+      37 <span class="lang-nl">foto's</span><span class="lang-en">photos</span>
+    </span>
+    <span class="meta-item">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-.5 2-.5 3 0v15c-1-.5-1.5-.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      4 <span class="lang-nl">dagen</span><span class="lang-en">days</span>
+    </span>
+  </div>
+
+  <!-- ═══════════ TRIP INTRO ═══════════ -->
+  <div class="trip-intro">
+    <div class="lang-nl"><p>Zeven dagen Oostzee: van een kampeerplek in de krijtrotsen van Rügen via de bakstenen straten van Stralsund en een fietstocht over het eiland naar de haven van Wismar. Een reis door de Hanze, de DDR en het licht dat van de zee komt.</p></div>
+    <div class="lang-en"><p>Seven days on the Baltic: from a campsite among Rügen's chalk cliffs through the brick-lined streets of Stralsund and a bike ride across the island to the harbour of Wismar. A journey through the Hanseatic League, the GDR, and the light that comes off the sea.</p></div>
+  </div>
+
+  <!-- ═══════════ DAY GRID ═══════════ -->
+  <div class="day-grid">
+
+    <!-- DAG 1 -->
+    <a href="./260626_Rugen.html" class="day-card">
+      <div class="day-card-img">
+        <div class="ph"><span class="lang-nl">Krijtrotsen, Königsstuhl</span><span class="lang-en">Chalk cliffs, Königsstuhl</span></div>
+      </div>
+      <div class="day-card-body">
+        <div class="day-card-num">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+          LOG 001
+        </div>
+        <div class="day-card-date">2026.06.26</div>
+        <h3><span class="lang-nl">Kamperen op Rügen</span><span class="lang-en">Camping on Rügen</span></h3>
+        <p class="day-card-summary">
+          <span class="lang-nl">Aankomst op het eiland, krijtrotsen en de eerste avond onder de bomen</span>
+          <span class="lang-en">Arriving on the island, chalk cliffs and the first evening under the trees</span>
+        </p>
+      </div>
+    </a>
+
+    <!-- DAG 2 -->
+    <a href="./260628_Stralsund.html" class="day-card">
+      <div class="day-card-img">
+        <div class="ph"><span class="lang-nl">Alter Markt, Rathaus en Nikolaikirche</span><span class="lang-en">Alter Markt, Town Hall and Nikolaikirche</span></div>
+      </div>
+      <div class="day-card-body">
+        <div class="day-card-num">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+          LOG 002
+        </div>
+        <div class="day-card-date">2026.06.28</div>
+        <h3><span class="lang-nl">Een dag Stralsund</span><span class="lang-en">A day in Stralsund</span></h3>
+        <p class="day-card-summary">
+          <span class="lang-nl">Te voet door de UNESCO-Altstadt: Hanze-gevels, baksteengotiek en de haven</span>
+          <span class="lang-en">Walking the UNESCO old town: Hanseatic facades, brick Gothic and the harbour</span>
+        </p>
+      </div>
+    </a>
+
+    <!-- DAG 3 -->
+    <a href="./260630_Rugen-fietstocht.html" class="day-card">
+      <div class="day-card-img">
+        <div class="ph"><span class="lang-nl">Kap Arkona, vuurtoren</span><span class="lang-en">Cape Arkona, lighthouse</span></div>
+      </div>
+      <div class="day-card-body">
+        <div class="day-card-num">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+          LOG 003
+        </div>
+        <div class="day-card-date">2026.06.30</div>
+        <h3><span class="lang-nl">Eiland fietstocht</span><span class="lang-en">Island bike ride</span></h3>
+        <p class="day-card-summary">
+          <span class="lang-nl">Op de fiets over Wittow en Jasmund: vuurtorens, beuken en strandpaden</span>
+          <span class="lang-en">Cycling across Wittow and Jasmund: lighthouses, beech forests and beach paths</span>
+        </p>
+      </div>
+    </a>
+
+    <!-- DAG 4 -->
+    <a href="./260702_Wismar.html" class="day-card">
+      <div class="day-card-img">
+        <div class="ph"><span class="lang-nl">Alter Hafen, Wismar</span><span class="lang-en">Old Harbour, Wismar</span></div>
+      </div>
+      <div class="day-card-body">
+        <div class="day-card-num">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+          LOG 004
+        </div>
+        <div class="day-card-date">2026.07.02</div>
+        <h3><span class="lang-nl">Wismar en de Oostzee</span><span class="lang-en">Wismar and the Baltic</span></h3>
+        <p class="day-card-summary">
+          <span class="lang-nl">De laatste Hanzestad: marktplein, waterkunst en vertrek over het water</span>
+          <span class="lang-en">The last Hanseatic town: market square, waterworks and departure across the water</span>
+        </p>
+      </div>
+    </a>
+
+  </div><!-- /day-grid -->
+
+  <!-- ═══════════ ROUTE MAP (collapsible) ═══════════ -->
+  <details>
+    <summary>
+      <span class="sum-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg></span>
+      <span class="lang-nl">Reisroute</span><span class="lang-en">Travel route</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><polygon points="12,7 13.5,11 12,10 10.5,11" class="accent-fill"/><polygon points="12,17 10.5,13 12,14 13.5,13"/></svg>
+        <span class="lang-nl">Kaart wordt later toegevoegd</span><span class="lang-en">Map to be added later</span>
+      </div>
+      <div class="route-legend">
+        <div class="route-stop">
+          <span class="stop-num">1</span>
+          <span class="stop-date">26 jun</span>
+          <span><span class="lang-nl">Rügen — Jasmund, kampeerplaats</span><span class="lang-en">Rügen — Jasmund, campsite</span></span>
+        </div>
+        <div class="route-stop">
+          <span class="stop-num">2</span>
+          <span class="stop-date">28 jun</span>
+          <span><span class="lang-nl">Stralsund — Altstadt, dagtocht</span><span class="lang-en">Stralsund — Old town, day trip</span></span>
+        </div>
+        <div class="route-stop">
+          <span class="stop-num">3</span>
+          <span class="stop-date">30 jun</span>
+          <span><span class="lang-nl">Rügen — Wittow &amp; Jasmund, fietstocht</span><span class="lang-en">Rügen — Wittow &amp; Jasmund, bike ride</span></span>
+        </div>
+        <div class="route-stop">
+          <span class="stop-num">4</span>
+          <span class="stop-date">2 jul</span>
+          <span><span class="lang-nl">Wismar — Altstadt &amp; haven</span><span class="lang-en">Wismar — Old town &amp; harbour</span></span>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ═══════════ TRIP STATS ═══════════ -->
+  <div class="trip-stats">
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label"><span class="lang-nl">dagen</span><span class="lang-en">days</span></span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">37</span>
+      <span class="stat-label"><span class="lang-nl">foto's</span><span class="lang-en">photos</span></span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label"><span class="lang-nl">steden</span><span class="lang-en">cities</span></span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">7</span>
+      <span class="stat-label"><span class="lang-nl">nachten</span><span class="lang-en">nights</span></span>
+    </div>
+  </div>
+
+  <!-- ═══════════ FOOTER NAV ═══════════ -->
+  <nav class="trip-nav">
+    <a href="../index.html">
+      <span class="lang-nl">← Alle reizen</span>
+      <span class="lang-en">← All journeys</span>
+    </a>
+  </nav>
+
+</div><!-- /container -->
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+  var NL_TITLE = 'Rügen, Stralsund & Wismar';
+  var EN_TITLE = 'Rügen, Stralsund & Wismar';
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-nl').setAttribute('aria-pressed', lang === 'nl');
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+    document.title = lang === 'nl' ? NL_TITLE : EN_TITLE;
+    try { localStorage.setItem('reiz-lang', lang); } catch(e) {}
+  }
+  try { var saved = localStorage.getItem('reiz-lang'); if (saved === 'en') setLang('en'); } catch(e) {}
+
+  /* Smooth accordion */
+  document.querySelectorAll('details').forEach(function(d) {
+    var sum = d.querySelector('summary');
+    var body = d.querySelector('.details-body');
+    if (!sum || !body) return;
+    sum.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (d.open) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        requestAnimationFrame(function() {
+          body.style.maxHeight = '0px';
+          body.style.overflow = 'hidden';
+        });
+        body.addEventListener('transitionend', function handler() {
+          d.open = false;
+          body.style.maxHeight = '';
+          body.style.overflow = '';
+          body.removeEventListener('transitionend', handler);
+        });
+      } else {
+        d.open = true;
+        var h = body.scrollHeight;
+        body.style.maxHeight = '0px';
+        body.style.overflow = 'hidden';
+        requestAnimationFrame(function() {
+          body.style.transition = 'max-height 0.3s ease';
+          body.style.maxHeight = h + 'px';
+        });
+        body.addEventListener('transitionend', function handler() {
+          body.style.maxHeight = '';
+          body.style.overflow = '';
+          body.style.transition = '';
+          body.removeEventListener('transitionend', handler);
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

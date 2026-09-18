@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 2: Stralsund te voet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --bg: #D4CABA;
+    --bg-card: #CBC1B0;
+    --bg-warm: #C4BAA8;
+    --text: #2A2520;
+    --text-light: #504A40;
+    --text-muted: #706858;
+    --brown: #3E3830;
+    --brown-line: #5A5040;
+    --icon-dark: #1A1612;
+    --orange: #D08040;
+    --orange-light: #E8A060;
+    --orange-dark: #B06830;
+    --border: #8A7E68;
+    --border-light: #A09480;
+    --max-w: 820px;
+    --gutter: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 17px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── LANGUAGE TOGGLE SYSTEM ── */
+  html[lang="nl"] .lang-en { display: none !important; }
+  html[lang="en"] .lang-nl { display: none !important; }
+
+  .lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(42,37,32,0.15);
+  }
+  .lang-toggle button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    border: none;
+    background: transparent;
+    padding: 8px 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .lang-toggle button:hover { background: var(--bg-warm); }
+  .lang-toggle button.active { background: var(--orange); color: var(--bg); }
+  .lang-toggle .sep { width: 1px; height: 20px; background: var(--border-light); flex-shrink: 0; }
+
+  /* ── HAND-DRAWN ICON SYSTEM ── */
+  .icon-inline {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  .icon-inline svg {
+    width: 18px; height: 18px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-inline svg .accent { stroke: var(--orange); }
+  .icon-inline svg .accent-fill { fill: var(--orange); stroke: none; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    max-width: 900px;
+    margin: 32px auto 0;
+    padding: 12px;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+  }
+  .hero-inner {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 360px;
+    max-height: 560px;
+    overflow: hidden;
+    border: 1px dashed var(--border);
+    background: var(--brown);
+  }
+  .hero-inner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(42,37,32,0.7) 100%);
+  }
+  .hero-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    z-index: 2;
+    padding: 40px 24px 20px;
+    color: var(--bg);
+  }
+  .hero-caption .day-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-caption .day-label svg {
+    width: 14px; height: 14px;
+    stroke: var(--orange-light);
+    fill: none;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+  }
+  .hero-caption h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .hero-caption .hero-sub {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.8;
+  }
+  .hero-tape {
+    position: absolute;
+    top: -6px;
+    right: 40px;
+    width: 60px;
+    height: 24px;
+    background: rgba(180, 170, 150, 0.5);
+    border: 1px solid rgba(160, 150, 130, 0.3);
+    z-index: 3;
+    transform: rotate(2deg);
+  }
+
+  /* ── STYLE BADGE ── */
+  .style-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0 0;
+    padding: 6px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    border: 1px dashed var(--orange);
+    background: var(--bg);
+  }
+  .style-badge svg {
+    width: 14px; height: 14px;
+    stroke: var(--orange);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ── DAY META BAR ── */
+  .day-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--border);
+    margin-bottom: 36px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+  .day-meta span { display: flex; align-items: center; gap: 6px; }
+  .day-meta svg {
+    width: 15px; height: 15px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .day-meta svg .accent { stroke: var(--orange); }
+  .day-meta svg .accent-fill { fill: var(--orange); stroke: none; }
+
+  /* ── SECTION HEADINGS WITH ICONS ── */
+  .section-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-time svg {
+    width: 16px; height: 16px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .section-time svg .accent { stroke: var(--orange); }
+  .section-time svg .accent-fill { fill: var(--orange); stroke: none; }
+
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 16px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── PROSE ── */
+  .prose {
+    font-size: 1rem;
+    line-height: 1.76;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+  .prose p { margin-bottom: 1em; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 32px 0;
+    padding: 24px 28px;
+    background: var(--bg-warm);
+    border-left: 3px dashed var(--orange);
+    position: relative;
+  }
+  .pull-quote .pq-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pull-quote .pq-label svg {
+    width: 14px; height: 14px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .pull-quote .pq-label svg .accent { stroke: var(--orange); }
+  .pull-quote .pq-label svg .accent-fill { fill: var(--orange); stroke: none; }
+  .pull-quote blockquote {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .pull-quote .pq-source {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+
+  /* ── INLINE PHOTO ── */
+  .story-photo {
+    margin: 36px 0;
+    border: 1px dashed var(--border);
+    overflow: hidden;
+  }
+  .story-photo figcaption {
+    padding: 12px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    background: var(--bg-card);
+    line-height: 1.5;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .story-photo figcaption svg {
+    width: 12px; height: 12px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    flex-shrink: 0;
+  }
+
+  /* ── HERO-2 ── */
+  .hero-2 {
+    position: relative;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 32px);
+    max-width: 900px;
+  }
+  .hero-2-inner {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    min-height: 260px;
+    max-height: 420px;
+    overflow: hidden;
+    border: 1px dashed var(--border);
+    background: var(--brown);
+  }
+  .hero-2 figcaption {
+    padding: 10px 14px 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* ── COLLAPSIBLE / ACCORDION ── */
+  details {
+    margin: 24px 0;
+    border: 1px dashed var(--border);
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+  details summary {
+    padding: 14px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    user-select: none;
+    transition: background 0.15s;
+    letter-spacing: 0.02em;
+  }
+  details summary:hover { background: var(--bg-warm); }
+  details summary::-webkit-details-marker { display: none; }
+  details summary .sum-icon {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+  }
+  details summary .sum-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  details summary .sum-icon svg .accent-fill { fill: var(--orange); stroke: none; }
+  details summary .chevron {
+    width: 16px; height: 16px;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  details summary .chevron svg {
+    width: 16px; height: 16px;
+    stroke: var(--brown-line);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-dasharray: 3 2;
+  }
+  details[open] summary .chevron { transform: rotate(180deg); }
+  details .details-body {
+    padding: 0 18px 18px;
+    border-top: 1px dashed var(--border);
+  }
+
+  /* ── PHOTO GRID ── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding-top: 16px;
+  }
+  .photo-grid figure {
+    border: 1px dashed var(--border);
+    overflow: hidden;
+    background: var(--bg-warm);
+  }
+  .photo-grid img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-grid figcaption {
+    padding: 6px 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-light);
+    border-top: 1px dashed var(--border);
+  }
+
+  /* ── MAP SECTION ── */
+  .map-section {
+    display: flex;
+    gap: 24px;
+    margin: 12px 0;
+    align-items: flex-start;
+  }
+  .map-placeholder {
+    flex: 0 0 50%;
+    aspect-ratio: 4/3;
+    background: var(--bg-warm);
+    border: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+  }
+  .map-placeholder svg {
+    width: 48px; height: 48px;
+    margin-bottom: 10px;
+    stroke: var(--icon-dark);
+    fill: none;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+  .map-placeholder svg .accent { stroke: var(--orange); }
+  .map-legend {
+    flex: 1;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+  .map-legend li {
+    list-style: none;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .map-legend li::before {
+    content: '';
+    width: 8px; height: 8px;
+    border: 1.5px solid var(--orange);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .map-legend .loc-time {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 40px 0;
+  }
+
+  /* ── FOOTER NAV ── */
+  .day-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 28px 0 48px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+  }
+  .day-nav a {
+    color: var(--orange-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s;
+    border-bottom: 1px dashed transparent;
+    padding-bottom: 2px;
+  }
+  .day-nav a:hover { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero-inner { height: 50vh; min-height: 300px; }
+    .hero-2-inner { height: 35vh; min-height: 200px; }
+    .hero-2 { width: calc(100vw - 16px); }
+    .map-section { flex-direction: column; }
+    .map-placeholder { flex: auto; width: 100%; }
+    .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .pull-quote { padding: 16px 18px; margin: 24px 0; }
+    .hero { margin: 16px 8px 0; }
+    .lang-toggle { top: 10px; right: 10px; }
+  }
+
+  /* ── PLACEHOLDER IMAGES ── */
+  .ph {
+    background: linear-gradient(135deg, #7A6E58, #504840);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(212,202,186,0.4);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 12px;
+  }
+
+  /* ── COORD STAMP ── */
+  .coord-stamp {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-light);
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ LANGUAGE TOGGLE ═══════ -->
+<div class="lang-toggle" role="radiogroup" aria-label="Taal / Language">
+  <button id="btn-nl" class="active" aria-pressed="true" onclick="setLang('nl')">NL</button>
+  <span class="sep"></span>
+  <button id="btn-en" aria-pressed="false" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ════════════ HERO 1 ════════════ -->
+<section class="hero">
+  <div class="hero-tape"></div>
+  <div class="hero-inner">
+    <img src="./img/hero-stralsund-harbour.jpg" alt="OZEANEUM en pakhuizen aan de Hafeninsel, Stralsund" style="width:100%;height:100%;object-fit:cover;">
+    <div class="hero-caption">
+      <div class="day-label">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.2"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/><polygon points="12,6 13.5,11 10.5,11" fill="currentColor" stroke="none" opacity="0.6"/></svg>
+        LOG 002 — 2026.06.28 — LAT 54.3° N — LONG 13.1° E
+      </div>
+      <h1>
+        <span class="lang-nl">Stralsund te voet</span>
+        <span class="lang-en">Stralsund on foot</span>
+      </h1>
+      <div class="hero-sub">
+        <span class="lang-nl">Hanze, Reformatie en blauw glas: een eiland van steen en water</span>
+        <span class="lang-en">Hanse, Reformation and blue glass: an island of stone and water</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── Style badge ── -->
+  <div class="style-badge">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/></svg>
+    FIELD NOTES
+  </div>
+
+  <!-- ── Day meta ── -->
+  <div class="day-meta">
+    <span>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" class="accent"/></svg>
+      09:00 – 17:00
+    </span>
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"/><circle cx="12" cy="10" r="2.5" class="accent"/></svg>
+      <span class="lang-nl">Stralsund Altstadt</span><span class="lang-en">Stralsund Old Town</span>
+    </span>
+    <span>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
+      <span class="lang-nl">37 foto's</span><span class="lang-en">37 photos</span>
+    </span>
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M17 3c-3 0-7 4-9 8-1 2-2 5-2 7l1 1"/><path d="M10 14l-3 6" class="accent"/><path d="M14 5c2 1 4 4 3 8"/></svg>
+      ~3,5 km
+    </span>
+  </div>
+
+  <!-- ════════════ 1. TE VOET ════════════ -->
+  <div class="section-time">
+    <svg viewBox="0 0 24 24"><path d="M18 8c0-3.3-2.7-6-6-6S6 4.7 6 8c0 2 3 4 3 4h6s3-2 3-4z"/><path d="M9 12v3c0 2 1.5 3 3 3s3-1 3-3v-3"/><circle cx="12" cy="7" r="1.5" class="accent-fill"/></svg>
+    <span class="lang-nl">Te voet</span><span class="lang-en">On foot</span>
+  </div>
+  <h2>
+    <span class="lang-nl">Een eiland van steen en water</span>
+    <span class="lang-en">An island of stone and water</span>
+  </h2>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Ik begin waar ik later ook weer uitkom: op de Neuer Markt. "Nieuw" is hier een middeleeuws woord. Het plein werd in de veertiende eeuw aangelegd, naast de oudere Alter Markt: meer een boerenmarkt dan een plein voor de rijken. Op zaterdagochtend staan er nog steeds kramen. Groente, mensen die elkaar kennen, een hond aan een tafelpoot. De gevels eromheen zijn negentiende-eeuws; de stad eronder is veel ouder.</p>
+      <p>Voor ik loop denk ik aan het water dat ik nog niet zie. Stralsund ligt op een eiland: de Strelasund aan de ene kant, twee binnenmeren aan de andere. Wie de stad wilde innemen moest over water. Dat ene feit verklaart bijna alles wat hierna komt: de rijkdom uit de haringhandel, de muren, Wallenstein die faalt, en veel later een Pruisische majoor die hier doodbloedt op de kasseien.</p>
+    </div>
+    <div class="lang-en">
+      <p>I start where I'll end up again: on the Neuer Markt. "New" is a medieval word here. The square was laid out in the fourteenth century, next to the older Alter Markt: more a farmers' market than a square for the wealthy. On Saturday mornings there are still stalls. Vegetables, people who know each other, a dog tied to a table leg. The facades around it are nineteenth-century; the city beneath them is much older.</p>
+      <p>Before I walk, I think of the water I can't yet see. Stralsund sits on an island: the Strelasund on one side, two inland lakes on the other. Anyone who wanted to take the city had to cross water. That single fact explains almost everything that follows: the wealth from herring trade, the walls, Wallenstein's failure, and much later a Prussian major who bleeds to death on the cobblestones.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <div class="pq-label">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      <span class="lang-nl">Dagmotto</span><span class="lang-en">Day motto</span>
+    </div>
+    <blockquote>
+      <span class="lang-nl">Geslachten komen langs en gaan weer weg, en de grond onder je voeten blijft gewoon liggen waar hij ligt.</span>
+      <span class="lang-en">Generations come and go, and the ground beneath your feet just stays where it is.</span>
+    </blockquote>
+    <div class="pq-source">
+      <span class="lang-nl">— naar Prediker 1:4</span>
+      <span class="lang-en">— after Ecclesiastes 1:4</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════ 2. ERFGOED ════════════ -->
+  <div class="section-time">
+    <svg viewBox="0 0 24 24"><path d="M12 3L2 9l10 6 10-6z"/><path d="M2 9v8l10 6"/><path d="M22 9v8l-10 6"/><circle cx="12" cy="9" r="1.5" class="accent-fill"/></svg>
+    <span class="lang-nl">Erfgoed</span><span class="lang-en">Heritage</span>
+  </div>
+  <h2>
+    <span class="lang-nl">Alter Markt: wereldse en kerkelijke macht, schouder aan schouder</span>
+    <span class="lang-en">Alter Markt: secular and sacred power, shoulder to shoulder</span>
+  </h2>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Ik loop de Ossenreyerstraße in, een van de oudste winkelstraten. De naam komt van de ossenhandelaren die hier zaten. Een zijstraatje: de Schuhstraße, ooit van het schoenmakersgilde. Straatnamen als een register van wie hier werkte.</p>
+      <p>De straat komt uit op de Alter Markt. Hier staan het Rathaus en de Nikolaikirche niet tegenover elkaar maar schouder aan schouder: de kerk verrijst pal achter het stadhuis, tegen de achtergevel aan. Het Rathaus begon rond 1230 als lakenhal, met eronder een bakstenen kelder: het Ratskeller, waar kooplieden balen laken en tonnen wijn via houten glijbanen naar beneden lieten zakken. Wijn tot uit Bourgondië. De siergevel aan de marktkant is klaar in 1444, een hoge bakstenen wand met nissen en gaten erin. Die gaten hadden een reden: ze lieten de wind door, zodat de muur geen zeil werd.</p>
+    </div>
+    <div class="lang-en">
+      <p>I walk into the Ossenreyerstraße, one of the oldest shopping streets. The name comes from the ox traders who were based here. A side street: the Schuhstraße, once the shoemakers' guild street. Street names as a register of who used to work here.</p>
+      <p>The street opens onto the Alter Markt. Here the Rathaus and the Nikolaikirche don't face each other but stand shoulder to shoulder: the church rises directly behind the town hall, flush against its back wall. The Rathaus began around 1230 as a cloth hall, with a brick cellar beneath it: the Ratskeller, where merchants sent bales of cloth and barrels of wine down wooden slides. Wine from as far as Burgundy. The ornamental facade on the market side was finished in 1444, a tall brick wall with niches and openings in it. Those holes served a purpose: they let the wind through, so the wall wouldn't act as a sail.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: Rathausdurchgang -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-raadhuis-doorgang.jpg" alt="Rathausdurchgang met zuilen en straatmuzikant" style="width:100%;aspect-ratio:16/9;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">De Rathausdurchgang: twee rijen zwarte zuilen, een glazen kap en een bruiloftsgezelschap</span>
+      <span class="lang-en">The Rathausdurchgang: two rows of black columns, a glass roof and a wedding party</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Onder het stadhuis door loopt een overdekte gang, de Rathausdurchgang. Twee rijen zwarte zuilen met verguld kapiteel, en daarboven een glazen kap die het licht in banen over de grote grijze plavuizen legt. Het galmt er: kindervoeten, ergens tussen de pijlers een straatmuzikant met een gitaar. Een klein bruiloftsgezelschap schuifelt voorbij, een jongen met een bos zonnebloemen voorop. In een nis een plaquette die eraan herinnert dat hier in de herfst van 1989, tijdens de vreedzame revolutie, Stralsunders meewerkten aan de opbouw van een democratische samenleving. Zevenhonderd jaar bestuur in één gang, en aan het eind ervan opnieuw burgers die meepraatten.</p>
+      <p>In een nis van diezelfde gang staat een bronzen buste: Gustaaf Adolf, koning van Zweden. In 1628 belegerde Wallenstein met het keizerlijke leger de stad. Stralsund weigerde te capituleren: het lag op zijn eiland en kon over zee bevoorraad worden. Volgens de overlevering zwoer Wallenstein, ziedend, dat hij de stad zou hebben: al hing ze met kettingen aan de hemel. Op 24 juli 1628 brak hij het beleg af. De stad sloot een verbond met de Zweedse koning, en in 1630 reed hij door de Fährstraße naar de Alter Markt, onder klokgelui en kanonschoten.</p>
+    </div>
+    <div class="lang-en">
+      <p>Running beneath the town hall is a covered passage, the Rathausdurchgang. Two rows of black columns with gilded capitals, and above them a glass roof that lays the light in bands across the large grey flagstones. It echoes: children's footsteps, somewhere among the pillars a street musician with a guitar. A small wedding party shuffles past, a boy carrying a bunch of sunflowers in front. In a niche, a plaque commemorating how in the autumn of 1989, during the peaceful revolution, Stralsund citizens helped build a democratic society. Seven hundred years of governance in one passageway, and at the end of it, once again, citizens who spoke up.</p>
+      <p>In another niche of the same passageway stands a bronze bust: Gustavus Adolphus, King of Sweden. In 1628, Wallenstein besieged the city with the imperial army. Stralsund refused to capitulate: it sat on its island and could be resupplied by sea. According to legend, Wallenstein swore, seething, that he would take the city even if it hung from heaven by chains. On 24 July 1628 he broke off the siege. The city formed an alliance with the Swedish king, and in 1630 he rode down the Fährstraße to the Alter Markt, to the sound of bells and cannon fire.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <div class="pq-label">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      <span class="lang-nl">Dagmotto</span><span class="lang-en">Day motto</span>
+    </div>
+    <blockquote>
+      <span class="lang-nl">Al die pronk die vooroploopt, struikelt uiteindelijk het eerst.</span>
+      <span class="lang-en">All that pomp in the vanguard stumbles first in the end.</span>
+    </blockquote>
+    <div class="pq-source">
+      <span class="lang-nl">— naar Spreuken 16:18</span>
+      <span class="lang-en">— after Proverbs 16:18</span>
+    </div>
+  </div>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>De Nikolaikirche is de oudste kerk van de stad, gewijd aan de patroon van de zeelieden. De zuidtoren haalt ruim honderd meter; voor schepen die de haven zochten was hij een baken. In 1525 liep het anders af: bij het Kirchenbrechen bestormden aanhangers van de Reformatie de kerken en sloegen beelden en altaren kapot. Van de zesenvijftig zijaltaren die hier stonden, bleef weinig heel. Wat er daarna kwam, kreeg vorm door Johannes Aepinus, een vriend van Luther die een evangelische kerkorde schreef: de eerste van Noord-Duitsland, op 5 november 1525 in werking getreden. Tekenend voor deze stad: niet een bisschop maar de raad gaf de opdracht, en een schoolmeester schreef de stad haar nieuwe kerk voor.</p>
+    </div>
+    <div class="lang-en">
+      <p>The Nikolaikirche is the city's oldest church, dedicated to the patron saint of seafarers. The south tower rises over a hundred metres; for ships looking for the harbour, it served as a beacon. In 1525 things took a different turn: during the Kirchenbrechen, supporters of the Reformation stormed the churches and smashed images and altars. Of the fifty-six side altars that stood here, little survived. What came after was shaped by Johannes Aepinus, a friend of Luther who wrote an evangelical church order: the first in northern Germany, enacted on 5 November 1525. Typical of this city: not a bishop but the council gave the order, and a schoolmaster wrote the city its new church.</p>
+    </div>
+  </div>
+
+  <!-- Gallery: Alter Markt photos -->
+  <details>
+    <summary>
+      <span class="sum-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
+      </span>
+      <span class="lang-nl">Foto's Alter Markt &amp; Rathausdurchgang (4)</span>
+      <span class="lang-en">Photos Alter Markt &amp; Rathausdurchgang (4)</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="photo-grid">
+        <figure>
+          <div class="ph" style="width:100%;aspect-ratio:4/3;">FOTO 2</div>
+          <figcaption><span class="lang-nl">Sierlijke groene deur met smeedijzer en verguld kruis</span><span class="lang-en">Ornate green door with wrought iron and gilded cross</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-bakstenen-doorgang.jpg" alt="Bakstenen doorgang bij de Nikolaikirche" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Bakstenen doorgang naast de Nikolaikirche: luchtbogen en kinderkopjes</span><span class="lang-en">Brick passage beside the Nikolaikirche: flying buttresses and cobblestones</span></figcaption>
+        </figure>
+        <figure>
+          <div class="ph" style="width:100%;aspect-ratio:4/3;">FOTO 4</div>
+          <figcaption><span class="lang-nl">Gevel met opschrift Artushof</span><span class="lang-en">Facade with Artushof inscription</span></figcaption>
+        </figure>
+        <figure>
+          <div class="ph" style="width:100%;aspect-ratio:4/3;">FOTO 5</div>
+          <figcaption><span class="lang-nl">Bronzen buste van Gustaaf Adolf, 1630</span><span class="lang-en">Bronze bust of Gustavus Adolphus, 1630</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </details>
+
+  <!-- Collapsible: Reformation background -->
+  <details>
+    <summary>
+      <span class="sum-icon">
+        <svg viewBox="0 0 24 24"><path d="M8 4h8"/><path d="M9 4v16"/><path d="M15 4v16"/><path d="M7 20h10"/><circle cx="12" cy="4" r="1" class="accent-fill"/></svg>
+      </span>
+      <span class="lang-nl">Achtergrond: cuius regio, eius religio</span>
+      <span class="lang-en">Background: cuius regio, eius religio</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="prose">
+        <div class="lang-nl">
+          <p>Dat het Rathaus en de Nikolaikirche tegen elkaar aan staan, is geen toeval. Wereldse en kerkelijke macht hebben elkaar hier eeuwenlang overeind gehouden. De jurist Joachim Stephani, van de universiteit van het nabije Greifswald, muntte de formule <em>cuius regio, eius religio</em>: "wiens gebied, diens godsdienst". Niet het geweten van de gelovige, maar de heerser bepaalde het geloof van zijn onderdanen. De vorst kreeg er de kerk mee in handen, en vanaf de kansel werd gehoorzaamheid aan diezelfde vorst gepreekt. In vrije steden als Stralsund deed de stadsraad dat: dezelfde raad die hiernaast in het Rathaus zetelde, besliste over de kerk ertegenaan.</p>
+          <p>Het patroon reikte verder dan Duitsland. In de Nederlanden groeide de opstand tegen het katholieke Spanje samen met het calvinisme: de Unie van Utrecht van 1579 erkende de gereformeerde kerk als publieke kerk. In Frankrijk liep het andersom: al in 1516 gaf het Concordaat van Bologna de koning het recht bisschoppen te benoemen. Juist omdat de macht van de koning aan het katholieke geloof vastzat, werden de protestantse hugenoten vervolgd: decennia godsdienstoorlog, tot het Edict van Nantes in 1598.</p>
+        </div>
+        <div class="lang-en">
+          <p>That the Rathaus and Nikolaikirche stand flush against each other is no accident. Secular and sacred power propped each other up here for centuries. The jurist Joachim Stephani, from the university at nearby Greifswald, coined the formula <em>cuius regio, eius religio</em>: "whose realm, his religion." Not the conscience of the believer, but the ruler determined the faith of his subjects. The prince gained control of the church, and from the pulpit, obedience to that same prince was preached. In free cities like Stralsund, the city council did the same: the council that sat next door in the Rathaus decided over the church built against it.</p>
+          <p>The pattern reached beyond Germany. In the Netherlands, the revolt against Catholic Spain grew together with Calvinism: the Union of Utrecht of 1579 recognised the Reformed church as the public church. In France, it ran the other way: as early as 1516, the Concordat of Bologna gave the king the right to appoint bishops. Precisely because royal power was tied to the Catholic faith, the Protestant Huguenots were persecuted: decades of religious war, until the Edict of Nantes in 1598.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <hr class="divider">
+
+  <!-- ════════════ 3. STILTE ════════════ -->
+  <div class="section-time">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" class="accent"/></svg>
+    <span class="lang-nl">Stilte</span><span class="lang-en">Silence</span>
+  </div>
+  <h2>
+    <span class="lang-nl">De blauwe kapel: licht in plaats van gezicht</span>
+    <span class="lang-en">The blue chapel: light instead of face</span>
+  </h2>
+
+  <!-- Inline photo: vierpas kerkdeur -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-nikolai-rozet-deur.jpg" alt="Gotisch rozet in de eiken kerkdeur van de Nikolaikirche" style="width:100%;aspect-ratio:3/2;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Vierpas in de eiken kerkdeur: dof en glad gewreven door eeuwen handen</span>
+      <span class="lang-en">Quatrefoil in the oak church door: dulled and worn smooth by centuries of hands</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Bij de ingang bleef ik bij de deur staan: in het donkere eikenhout is een ronde vierpas gesneden, vier klaverbladen binnen een cirkel, de randen dof en glad gewreven door handen die hier eeuwen naar binnen gingen.</p>
+      <p>Ik verwachtte dertiende-eeuwse gotiek, en die is er: hoge pijlers, het middenschip in de kleuren van rond 1350. Achter het hoogaltaar staat een astronomisch uurwerk uit 1394 van Nikolaus Lilienfeld, de oudste in oorspronkelijke staat bewaarde mechanische klok ter wereld, met een zelfportret van de maker erop. Hij loopt al sinds de zestiende eeuw niet meer. Maar in een zijkapel hangt iets heel anders: glas-in-lood dat pas in 2006 is geplaatst. Het is van Johannes Schreiter, een glaskunstenaar die blauw ooit het vuur van de geest noemde. Geen heiligen, geen bijbelverhaal. Alleen grote vlakken diep blauw, doorsneden door dunne loodlijnen. Wie hier een beeld van God verwacht, vindt juist het weigeren daarvan: licht in plaats van gezicht. De kapel werkt daardoor eerder als stilteruimte dan als kerk.</p>
+    </div>
+    <div class="lang-en">
+      <p>At the entrance I paused at the door: in the dark oak, a round quatrefoil is carved, four trefoils within a circle, the edges dulled and worn smooth by hands that have been coming through here for centuries.</p>
+      <p>I expected thirteenth-century Gothic, and it's there: tall pillars, the nave in the colours of around 1350. Behind the high altar stands an astronomical clock from 1394 by Nikolaus Lilienfeld, the oldest preserved mechanical clock in its original state in the world, with a self-portrait of the maker on it. It hasn't run since the sixteenth century. But in a side chapel hangs something quite different: stained glass placed only in 2006. It's by Johannes Schreiter, a glass artist who once called blue the fire of the spirit. No saints, no biblical story. Just large planes of deep blue, cut through by thin lead lines. Anyone expecting an image of God finds precisely the refusal of one: light instead of face. The chapel works more as a space of silence than a church.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: Blauwe kapel venster -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-blauwe-kapel-venster.jpg" alt="Gotisch venster met heiligenfiguren, blauwe kapel" style="width:100%;aspect-ratio:2/3;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Gotisch venster met heiligenfiguren: warm licht valt door het glas</span>
+      <span class="lang-en">Gothic window with saint figures: warm light falling through the glass</span>
+    </figcaption>
+  </figure>
+
+  <!-- Inline photo: Neumann kunstwerk -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-blauwe-kapel-neumann.jpg" alt="S&amp;H-P Neumann, ihr seid das licht der welt" style="width:100%;aspect-ratio:3/2;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">S&amp;H-P Neumann: "ihr seid das licht der w..." / "der schleier hebt sich"</span>
+      <span class="lang-en">S&amp;H-P Neumann: "you are the light of the w..." / "the veil lifts"</span>
+    </figcaption>
+  </figure>
+
+  <div class="pull-quote">
+    <div class="pq-label">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      <span class="lang-nl">Dagmotto</span><span class="lang-en">Day motto</span>
+    </div>
+    <blockquote>
+      <span class="lang-nl">Bij U ontspringt de bron, en het is pas in uw licht dat we licht zien.</span>
+      <span class="lang-en">With You is the fountain, and it is only in Your light that we see light.</span>
+    </blockquote>
+    <div class="pq-source">
+      <span class="lang-nl">— naar Psalm 36:9</span>
+      <span class="lang-en">— after Psalm 36:9</span>
+    </div>
+  </div>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>In het hoogkoor staat het middeleeuwse hoofdaltaar: een houten vleugelaltaar van ruim twaalf meter hoog, met meer dan honderd gesneden figuren, en in het midden een kruisiging vol volk: ruiters, soldaten, treurende vrouwen. Het is aan het eind van de vijftiende eeuw gemaakt en, anders dan de zijaltaren, het Kirchenbrechen doorgekomen.</p>
+    </div>
+    <div class="lang-en">
+      <p>In the chancel stands the medieval main altar: a wooden winged altarpiece over twelve metres high, with more than a hundred carved figures, and at its centre a crucifixion scene teeming with people: horsemen, soldiers, mourning women. It was made at the end of the fifteenth century and, unlike the side altars, survived the Kirchenbrechen.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: bronzen Christus -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-nikolai-christus.jpg" alt="Bronzen Christus van Hans Schwegerle, 1931" style="width:100%;aspect-ratio:2/3;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Bronzen Christus van Hans Schwegerle, 1931: de armen wijd, de blik langs de bezoeker heen</span>
+      <span class="lang-en">Bronze Christ by Hans Schwegerle, 1931: arms wide, gaze past the visitor</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>In de zuidelijke torenhal staat nog iets stils. Een bronzen Christus, ruim drie meter hoog, de armen wijd, op een sobere stenen sokkel. Hans Schwegerle maakte het in 1931 als gedenkteken voor de gevallenen. Op de treden ervoor stond eerst 1914 en 1918; na de tweede oorlog werden het 1914–1918 en 1939–1945: twee getallenparen die de eeuw samenvatten. De figuur kijkt omhoog, langs de bezoeker heen.</p>
+    </div>
+    <div class="lang-en">
+      <p>In the south tower hall stands something else, quiet. A bronze Christ, over three metres tall, arms wide, on a plain stone plinth. Hans Schwegerle made it in 1931 as a memorial for the fallen. On the steps in front, the dates originally read 1914 and 1918; after the second war they became 1914–1918 and 1939–1945: two pairs of numbers that sum up the century. The figure gazes upward, past the visitor.</p>
+    </div>
+  </div>
+
+  <!-- Gallery: Nikolaikirche photos -->
+  <details>
+    <summary>
+      <span class="sum-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
+      </span>
+      <span class="lang-nl">Meer foto's Nikolaikirche (7)</span>
+      <span class="lang-en">More photos Nikolaikirche (7)</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="photo-grid">
+        <figure>
+          <img src="./img/stralsund-nikolai-schnitzaltar.jpg" alt="Laatgotisch hoogaltaar" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Het Schnitzaltar: verguld kruisigingstafereel met zijpanelen, eind 15e eeuw</span><span class="lang-en">The carved altarpiece: gilded crucifixion scene with side panels, late 15th century</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-nikolai-schip-interieur.jpg" alt="Middenschip Nikolaikirche" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Het middenschip: polychrome bogen, kroonluchter, het altaar in de verte</span><span class="lang-en">The nave: polychrome arches, chandelier, the altar in the distance</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-nikolai-gewelf-orgel.jpg" alt="Gewelf en orgel Nikolaikirche" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Recht omhoog: ribgewelf en orgel, de akoestiek van zevenhonderd jaar</span><span class="lang-en">Straight up: ribbed vault and organ, seven hundred years of acoustics</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-nikolai-vrouw-deur.jpg" alt="Bezoekster bij de kerkdeur" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Bij de kerkdeur: het polychrome interieur achter haar rug</span><span class="lang-en">At the church door: the polychrome interior behind her</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-nikolai-barokdeur-psalm.jpg" alt="Barokke deur met Psalm LXXXIV" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Barokke deur met cherubijnen en opschrift Psalm LXXXIV</span><span class="lang-en">Baroque door with cherubs and inscription Psalm LXXXIV</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-nikolai-nikolaus-tekst.jpg" alt="Der heilige Nikolaus, kalligrafie" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">"Der heilige Nikolaus", kalligrafie op handgeschept papier, nach Anselm Grün</span><span class="lang-en">"Der heilige Nikolaus", calligraphy on handmade paper, after Anselm Grün</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-nikolai-kruisdrager-buiten.jpg" alt="Houten kruisdrager aan de buitenmuur" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Houten Christus met kruis, buitenmuur, rood-wit gestreept</span><span class="lang-en">Wooden Christ carrying cross, exterior wall, red and white striped</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </details>
+
+  <hr class="divider">
+
+  <!-- ════════════ 4. VERHAAL ════════════ -->
+  <div class="section-time">
+    <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+    <span class="lang-nl">Verhaal</span><span class="lang-en">Story</span>
+  </div>
+  <h2>
+    <span class="lang-nl">Fährstraße: de majoor die te vroeg kwam</span>
+    <span class="lang-en">Fährstraße: the major who came too early</span>
+  </h2>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Verderop loopt de Fährstraße naar het water, de straat naar de veerpont. Hier viel op 31 mei 1809 Ferdinand von Schill. Schill was een Pruisische majoor die op eigen houtje een opstand tegen Napoleon wilde ontketenen: zonder toestemming van zijn koning, die hem daarom een deserteur noemde. Hij had naam gemaakt bij de verdediging van Kolberg, trok met zijn huzaren via Damgarten naar Stralsund, dat toen al bijna twee jaar Frans bezet was. De Stralsunders stonden er lauw bij; zo strijdlustig als hij waren ze niet.</p>
+      <p>Op 29 mei rukten zesduizend Denen en Nederlanders onder Frans commando op; op 31 mei braken ze door het Kniepertor de stad binnen. In het straatgevecht in de Fährstraße werd Schill door een kogel in het hoofd getroffen en viel dood van zijn paard. Wat daarna gebeurde is grimmig: zijn hoofd werd afgesneden, op sterk water gezet en als trofee naar Napoleons broer Jérôme in Kassel gestuurd. Het kwam terecht in de naturaliënverzameling van een Leidse hoogleraar, en werd pas in 1837 begraven, in Braunschweig, niet bij zijn romp.</p>
+    </div>
+    <div class="lang-en">
+      <p>Further along, the Fährstraße runs towards the water, the street to the ferry. Here, on 31 May 1809, Ferdinand von Schill fell. Schill was a Prussian major who wanted to start an uprising against Napoleon on his own: without the permission of his king, who branded him a deserter. He had made his name defending Kolberg, and marched with his hussars via Damgarten to Stralsund, which by then had been under French occupation for nearly two years. The citizens of Stralsund were lukewarm; they weren't as bellicose as he was.</p>
+      <p>On 29 May, six thousand Danes and Dutch troops under French command advanced; on 31 May they broke through the Kniepertor into the city. In the street fighting on the Fährstraße, Schill was hit by a bullet to the head and fell dead from his horse. What happened next is grim: his head was severed, placed in spirits, and sent as a trophy to Napoleon's brother Jérôme in Kassel. It ended up in the natural history collection of a Leiden professor, and wasn't buried until 1837, in Braunschweig, not with his body.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <div class="pq-label">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      <span class="lang-nl">Dagmotto</span><span class="lang-en">Day motto</span>
+    </div>
+    <blockquote>
+      <span class="lang-nl">Zet je hoop niet op vorsten, op een mens in wiens hand geen redding ligt.</span>
+      <span class="lang-en">Put not your trust in princes, in a mortal in whose hand there is no salvation.</span>
+    </blockquote>
+    <div class="pq-source">
+      <span class="lang-nl">— naar Psalm 146:3</span>
+      <span class="lang-en">— after Psalm 146:3</span>
+    </div>
+  </div>
+
+  <!-- Inline photo: Mägdebrunnen -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-maegdebrunnen-closeup.jpg" alt="Mägdebrunnen close-up: drie gezichten, gouden appel" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">De Mägdebrunnen: drie bronzen meiden, een zwerfkei, de Stralsunders noemen ze "de kwebbelende wijven"</span>
+      <span class="lang-en">The Mägdebrunnen: three bronze maidens, an erratic boulder, locals call them "the chattering wives"</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Waar de Schillstraße hier in de Fährstraße uitkomt, staan drie bronzen meiden bij een fontein: de Mägdebrunnen, in 2003 gemaakt door Günter Kaden. Een bekken gehakt uit één zwerfkei, met de drie figuren ertegenaan. Ze schikken zich tegen elkaar en kijken de straat af, richting haven; de Stralsunders noemen ze spottend "de kwebbelende wijven". Eeuwenlang stond hier een put, en het waren de meiden die het water naar de patriciërshuizen droegen: een van hen laat haar kruik kantelen over de granieten rand.</p>
+    </div>
+    <div class="lang-en">
+      <p>Where the Schillstraße meets the Fährstraße, three bronze maidens stand by a fountain: the Mägdebrunnen, made in 2003 by Günter Kaden. A basin hewn from a single erratic boulder, with the three figures leaning against it. They nestle together and gaze down the street towards the harbour; locals call them mockingly "the chattering wives." For centuries a well stood here, and it was the maids who carried water to the patrician houses: one of them tilts her jug over the granite rim.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: stokroos -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-stokroos-baksteen.jpg" alt="Donkerrode stokroos tegen baksteen" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Donkerrode stokroos tegen baksteen, bijna zwart in het hart</span>
+      <span class="lang-en">Dark red hollyhock against brick, nearly black at its heart</span>
+    </figcaption>
+  </figure>
+
+  <hr class="divider">
+
+  <!-- ════════════ 5. BEELDVANG ════════════ -->
+  <div class="section-time">
+    <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
+    <span class="lang-nl">Beeldvang</span><span class="lang-en">Frame</span>
+  </div>
+  <h2>
+    <span class="lang-nl">Museumkwartier en haven: de stad die van de zee leefde</span>
+    <span class="lang-en">Museum quarter and harbour: the city that lived off the sea</span>
+  </h2>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Via de Mönchstraße: genoemd naar het oude dominicanenklooster: kom ik in het museumkwartier. Het Katharinenkloster is een voormalig dominicanenklooster, in de dertiende eeuw gesticht op grond die de Rügense vorsten aan de monniken gaven. Het is de grootste bewaarde kloosteraanleg van zijn soort in Noord-Duitsland. Na de reformatie ging het over in stadsbezit, en de kloosterkerk kreeg werk dat weinig met gebed te maken had: arsenaal, silo, groenteopslag, paardenstal. Twee musea delen het nu: het Deutsches Meeresmuseum en het Stralsund Museum.</p>
+      <p>Op het voorplein ligt een grote vis van steen. Uit roodachtig graniet gehakt, met een dikke ronde kop en één groot oog. Beeldhouwer Mile Prerad maakte voor het museum meerdere zeedieren uit zwerfkeien van Rügen: steen dat de laatste ijstijd hier achterliet, tot vis geworden.</p>
+    </div>
+    <div class="lang-en">
+      <p>Via the Mönchstraße: named after the old Dominican monastery: I reach the museum quarter. The Katharinenkloster is a former Dominican monastery, founded in the thirteenth century on land that the Rügen princes gave the monks. It is the largest preserved monastic complex of its kind in northern Germany. After the Reformation it passed into city hands, and the monastery church was put to work that had little to do with prayer: armoury, granary, vegetable store, stable. Two museums now share it: the Deutsches Meeresmuseum and the Stralsund Museum.</p>
+      <p>On the forecourt lies a large fish in stone. Carved from reddish granite, with a fat round head and one big eye. Sculptor Mile Prerad made several sea creatures from Rügen's erratic boulders for the museum: stone left behind by the last Ice Age, turned into fish.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: kotter SAS 95 -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-sas95-meeresmuseum.jpg" alt="Kotter SAS 95 bij het Deutsches Meeresmuseum" style="width:100%;aspect-ratio:16/9;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Kotter SAS 95 "Adolf Reichwein", 1949: zeventien meter hout op het droge</span>
+      <span class="lang-en">Cutter SAS 95 "Adolf Reichwein", 1949: seventeen metres of wood on dry land</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Hoe verder ik loop, hoe meer de stad met kleur blijkt te spelen. Een rij smalle geveltjes strak naast elkaar: mosgroen, wit met rode krullen, okergeel, met hier en daar een bordje ANTIK aan een pui. Op de muren beschilderde keramische tegels als uithangbord: kubistische letters in bruin, turkoois en oker die HANSE GALERIE spellen boven een boekwinkelraam. Geen twee hetzelfde; iemand heeft er plezier in gehad. Op een grijze hoekpijler bij een opticien zit een beschilderd houtsnijwerk, krullen in rood, groen en oker, alsof iemand een stuk barok van een kast heeft losgezaagd en op straat gehangen.</p>
+      <p>En dan bij de haven. Het begon met vis: haring, gevangen op de Schoonse gronden bij de Sont, gezouten en per schip uitgevoerd naar half Europa. Daaromheen groeide een web van goederen: zout, graan en hout uit het achterland, laken uit Vlaanderen, wol uit Engeland, was en bont uit Rusland, wijn uit Frankrijk. In de veertiende eeuw was Stralsund na Lübeck de machtigste Hanzestad van de zuidelijke Oostzee, met rond de dertienduizend inwoners. In 1370 dicteerde de Stralsundse burgemeester de vrede aan de Deense koning: een stad die een koning haar voorwaarden oplegde.</p>
+    </div>
+    <div class="lang-en">
+      <p>The further I walk, the more the city turns out to play with colour. A row of narrow facades pressed close together: moss green, white with red curlicues, ochre yellow, with the occasional ANTIK sign on a shopfront. On the walls, hand-painted ceramic tiles serving as shop signs: cubist letters in brown, turquoise and ochre spelling HANSE GALERIE above a bookshop window. No two the same; someone enjoyed making them. On a grey corner pillar outside an optician's, a painted woodcarving, scrolls in red, green and ochre, as if someone had sawn a piece of baroque off a cabinet and hung it on the street.</p>
+      <p>And then the harbour. It began with fish: herring, caught on the Scanian grounds near the Sound, salted and shipped out to half of Europe. Around it grew a web of goods: salt, grain and timber from the hinterland, cloth from Flanders, wool from England, wax and furs from Russia, wine from France. In the fourteenth century, Stralsund was the most powerful Hanseatic city on the southern Baltic after Lübeck, with around thirteen thousand inhabitants. In 1370, the mayor of Stralsund dictated peace terms to the Danish king: a city imposing its conditions on a king.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <div class="pq-label">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      <span class="lang-nl">Dagmotto</span><span class="lang-en">Day motto</span>
+    </div>
+    <blockquote>
+      <span class="lang-nl">Rijkdom krijgt vleugels en vliegt weg, als een arend de lucht in.</span>
+      <span class="lang-en">Riches grow wings and fly away, like an eagle into the sky.</span>
+    </blockquote>
+    <div class="pq-source">
+      <span class="lang-nl">— naar Spreuken 23:5</span>
+      <span class="lang-en">— after Proverbs 23:5</span>
+    </div>
+  </div>
+
+  <!-- Inline photo: haven meerpaal OZEANEUM -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-stadthafen-meerpaal.jpg" alt="Stadthafen met meerpaal en OZEANEUM op de achtergrond" style="width:100%;aspect-ratio:16/9;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">De Stadthafen: een oude meerpaal, het witte OZEANEUM en de graansilo's erachter</span>
+      <span class="lang-en">The Stadthafen: an old mooring post, the white OZEANEUM and the grain silos behind</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>De brug die me naar de kade brengt, de Semlower Brücke, draagt op een gietijzeren plaquette haar eigen geschiedenis in het klein: gebouwd in 1868, verwoest in 1944, herbouwd in 1995–96, dat laatste met Europees geld, een kring van sterren mee in het metaal gegoten. Bouwen, kapot, opnieuw: de stad in drie regels.</p>
+      <p>Uit het groenige water steekt een oude meerpaal op: een bundel houten palen, de top afgezaagd als een klaverblad en met een ijzeren band bijeengehouden. Op de gerestaureerde Hansekaje liggen museumschepen, waaronder de Gorch Fock uit 1933. En ernaast staat het OZEANEUM uit 2008, wit en gerond alsof het door de stroming is gladgeslepen. Het trok in het eerste jaar ruim negenhonderdduizend bezoekers en werd in 2010 tot Europees Museum van het Jaar gekozen. Binnen hangt een walvisskelet aan stalen kabels onder een glazen kap.</p>
+    </div>
+    <div class="lang-en">
+      <p>The bridge that brings me to the quay, the Semlower Brücke, carries its own history in miniature on a cast-iron plaque: built in 1868, destroyed in 1944, rebuilt in 1995–96, that last time with European money, a ring of stars cast into the metal. Build, destroy, rebuild: the city in three lines.</p>
+      <p>From the greenish water rises an old mooring post: a bundle of wooden piles, the top sawn off in a trefoil and held together with an iron band. On the restored Hansekaje lie museum ships, including the Gorch Fock from 1933. And next to it stands the OZEANEUM from 2008, white and rounded as if smoothed by currents. In its first year it drew over nine hundred thousand visitors and was named European Museum of the Year in 2010. Inside, a whale skeleton hangs from steel cables beneath a glass roof.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ HERO 2 ════════════ -->
+<figure class="hero-2">
+  <div class="hero-2-inner">
+    <img src="./img/stralsund-gorch-fock-boegspriet.jpg" alt="Uitzicht onder de boegspriet van de Gorch Fock naar de Rügenbrücke" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <figcaption>
+    <span class="lang-nl">Onder de boegspriet van de Gorch Fock door: de graansilo's, het loodshuis en de tuien van de Rügenbrücke</span>
+    <span class="lang-en">Through the bowsprit of the Gorch Fock: the grain silos, the pilots' house and the stays of the Rügen Bridge</span>
+  </figcaption>
+</figure>
+
+<div class="container">
+
+  <!-- Gallery: Museumkwartier & Haven (12 photos) -->
+  <details>
+    <summary>
+      <span class="sum-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="13" r="1.2" class="accent-fill"/></svg>
+      </span>
+      <span class="lang-nl">Alle foto's museumkwartier &amp; haven (12)</span>
+      <span class="lang-en">All photos museum quarter &amp; harbour (12)</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="photo-grid">
+        <figure>
+          <img src="./img/stralsund-straat-jakobi.jpg" alt="Straat met pastelgevels en de spits van St. Jakobi" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+          <figcaption><span class="lang-nl">Pastelgevels en de spits van St. Jakobi erachter</span><span class="lang-en">Pastel facades and the spire of St. Jakobi behind</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-gotische-trapgevel.jpg" alt="Gotische trapgevel met ijzeren ankers" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+          <figcaption><span class="lang-nl">Gotische trapgevel met ijzeren muurankers</span><span class="lang-en">Gothic stepped gable with iron wall anchors</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-gotisch-giebelhuis.jpg" alt="Gotisch giebelhuis met rondboogingang" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+          <figcaption><span class="lang-nl">Giebelhuis met rondboogingang, baksteen en pleisterpanelen</span><span class="lang-en">Gable house with round-arch entrance, brick and plaster panels</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-muurschildering.jpg" alt="DDR-muurschildering met symbolische figuren" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+          <figcaption><span class="lang-nl">DDR-sgraffito op een gevel: slang, vogels, symbolische figuren</span><span class="lang-en">GDR sgraffito on a facade: serpent, birds, symbolic figures</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-ozeaneum-plein.jpg" alt="OZEANEUM en Speicher-pakhuizen" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Het OZEANEUM en de Speicher-pakhuizen, wijd</span><span class="lang-en">The OZEANEUM and the Speicher warehouses, wide</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-speicher-terrassen.jpg" alt="Speicher-pakhuizen met Störtebeker-terrassen" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Speicher-pakhuizen met Störtebeker- en Mionetto-terrassen</span><span class="lang-en">Speicher warehouses with Störtebeker and Mionetto terraces</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-graansilo.jpg" alt="Graansilo aan de haven" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Graansilo aan de haven, baksteen en beton</span><span class="lang-en">Grain silo at the harbour, brick and concrete</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-haven-panorama.jpg" alt="Havenpanorama met boten en graansilo" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Havenpanorama: boten, graansilo, hotelbord</span><span class="lang-en">Harbour panorama: boats, grain silo, hotel sign</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-kade-gorch-fock.jpg" alt="Vrouw loopt over de kade richting Gorch Fock" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Op de kade richting de Gorch Fock</span><span class="lang-en">On the quay toward the Gorch Fock</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-gorch-fock-tuigage.jpg" alt="Tuigage van de Gorch Fock van onderaf" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Tuigage van de Gorch Fock, van onderaf tegen de lucht</span><span class="lang-en">Rigging of the Gorch Fock, from below against the sky</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-liefdessloten.jpg" alt="Cortenstalen liefdessloten-sculptuur" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+          <figcaption><span class="lang-nl">Cortenstalen liefdessloten-sculptuur op de kasseien</span><span class="lang-en">Corten steel love-lock sculpture on the cobblestones</span></figcaption>
+        </figure>
+        <figure>
+          <img src="./img/stralsund-selfie-haven.jpg" alt="Selfie bij de haven met Gorch Fock op de achtergrond" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <figcaption><span class="lang-nl">Haven-selfie, de Gorch Fock op de achtergrond</span><span class="lang-en">Harbour selfie, the Gorch Fock in the background</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </details>
+
+  <!-- Collapsible: Achtergrond Hanzehandel -->
+  <details>
+    <summary>
+      <span class="sum-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 3L2 9l10 6 10-6z"/><path d="M2 9v8l10 6"/><path d="M22 9v8l-10 6"/><circle cx="12" cy="9" r="1.5" class="accent-fill"/></svg>
+      </span>
+      <span class="lang-nl">Achtergrond: Stralsund en de Hanzehandel</span>
+      <span class="lang-en">Background: Stralsund and Hanseatic trade</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="prose">
+        <div class="lang-nl">
+          <p>Tussen 1330 en 1380 werd er in Stralsund zo veel gebouwd dat er een eigen stijl uit ontstond: de Sundische gotiek. Het Rathaus, de kerken, de pakhuizen: alles in die periode. Wie die rijkdom wil zien, hoeft maar de Nikolaikirche in te lopen: het koorgestoelte van de Novgorodvaarders, van rond 1370, toont op eikenhouten panelen de pelsjacht en het winnen van was: precies de handel waar het geld vandaan kwam.</p>
+          <p>Vanaf de vijftiende, zestiende eeuw verschoof de handel naar de Atlantische Oceaan; Amerika werd ontdekt, Holland en Engeland kwamen op, en de Hanze paste zich niet aan. De Dertigjarige Oorlog deed de rest. De stad bleef bestaan, maar haar gouden eeuw was voorbij.</p>
+          <p>De haven kreeg later een tweede leven. In de negentiende en twintigste eeuw werd Stralsund weer een overslaghaven, nu voor graan: en daarvan staan de silo's er nog. Hoge bakstenen blokken op de Hafeninsel, gebouwd tussen 1912 en 1940, tot veertig meter hoog, één met een reliëf van een Hanzekogge in de blinde muur. Ze zijn nooit mooi bedoeld en juist daardoor indrukwekkend; graan gaat er allang niet meer in: er zitten nu een restaurant en een hotel in.</p>
+        </div>
+        <div class="lang-en">
+          <p>Between 1330 and 1380, so much was built in Stralsund that it produced its own style: Sundian Gothic. The Rathaus, the churches, the warehouses: all from that period. Anyone who wants to see that wealth need only walk into the Nikolaikirche: the choir stalls of the Novgorod traders, from around 1370, show on oak panels the fur hunt and the extraction of wax: precisely the trade the money came from.</p>
+          <p>From the fifteenth and sixteenth centuries onward, trade shifted to the Atlantic; the Americas were discovered, Holland and England rose, and the Hanseatic League failed to adapt. The Thirty Years' War did the rest. The city survived, but its golden age was over.</p>
+          <p>The harbour later found a second life. In the nineteenth and twentieth centuries, Stralsund became a transhipment port again, this time for grain: and the silos still stand. Tall brick blocks on the Hafeninsel, built between 1912 and 1940, up to forty metres high, one with a relief of a Hanseatic cog in its blind wall. They were never meant to be beautiful and are impressive precisely because of that; grain has long stopped going in: they now house a restaurant and a hotel.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Collapsible: Dagkaart -->
+  <details>
+    <summary>
+      <span class="sum-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/><polygon points="12,7 13.5,11.5 10.5,11.5" class="accent-fill"/></svg>
+      </span>
+      <span class="lang-nl">Dagkaart met route</span>
+      <span class="lang-en">Day map with route</span>
+      <span class="chevron"><svg viewBox="0 0 24 24"><path d="M7 9l5 5 5-5"/></svg></span>
+    </summary>
+    <div class="details-body">
+      <div class="map-section">
+        <div class="map-placeholder">
+          <svg viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="28" stroke-width="1"/>
+            <line x1="32" y1="4" x2="32" y2="60" stroke-width="0.8"/>
+            <line x1="4" y1="32" x2="60" y2="32" stroke-width="0.8"/>
+            <line x1="12" y1="12" x2="52" y2="52" stroke-width="0.5"/>
+            <line x1="52" y1="12" x2="12" y2="52" stroke-width="0.5"/>
+            <polygon points="32,8 34,18 30,18" class="accent" fill="none" stroke-dasharray="0"/>
+            <text x="32" y="7" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#D08040" stroke="none" font-weight="600">N</text>
+            <text x="32" y="63" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#5A5040" stroke="none">Z</text>
+            <text x="3" y="34" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#5A5040" stroke="none">W</text>
+            <text x="61" y="34" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#5A5040" stroke="none">O</text>
+          </svg>
+          <span class="lang-nl">Interactieve kaart<br>(Leaflet.js in productie)</span>
+          <span class="lang-en">Interactive map<br>(Leaflet.js in production)</span>
+        </div>
+        <ul class="map-legend">
+          <li>Neuer Markt<span class="loc-time"><span class="lang-nl">start, ochtend</span><span class="lang-en">start, morning</span></span></li>
+          <li>Ossenreyerstraße → Alter Markt / Rathaus</li>
+          <li>Rathausdurchgang → Nikolaikirche<span class="loc-time"><span class="lang-nl">gotisch baksteen</span><span class="lang-en">Gothic brick</span></span></li>
+          <li><span class="lang-nl">Blauwe Kapel (Lateinschule)</span><span class="lang-en">Blue Chapel (Latin School)</span></li>
+          <li>Marienkirche</li>
+          <li>Fährstraße → Mägdebrunnen</li>
+          <li><span class="lang-nl">Bakstenen doorgang / stokroos</span><span class="lang-en">Brick passage / hollyhock</span></li>
+          <li>Mönchstraße → Katharinenkloster / SAS 95</li>
+          <li><span class="lang-nl">Museumkwartier: gotische gevels, DDR-muurschildering</span><span class="lang-en">Museum quarter: Gothic gables, GDR mural</span></li>
+          <li>OZEANEUM / Speicher<span class="loc-time"><span class="lang-nl">havenkwartier</span><span class="lang-en">harbour quarter</span></span></li>
+          <li>Stadthafen → Gorch Fock<span class="loc-time"><span class="lang-nl">kade &amp; tuigage</span><span class="lang-en">quay &amp; rigging</span></span></li>
+          <li><span class="lang-nl">Gedenkplaat Küterbastei</span><span class="lang-en">Memorial plaque Küterbastei</span></li>
+          <li>Kütertor<span class="loc-time"><span class="lang-nl">stadspoort 1446</span><span class="lang-en">city gate 1446</span></span></li>
+          <li>Knieperstraße → Neuer Markt<span class="loc-time"><span class="lang-nl">einde</span><span class="lang-en">end</span></span></li>
+        </ul>
+      </div>
+      <div class="coord-stamp">54°18'42"N 13°05'24"E → 54°18'55"N 13°05'10"E — ~4 km</div>
+    </div>
+  </details>
+
+  <hr class="divider">
+
+  <!-- ════════════ 6. REFLECTIE ════════════ -->
+  <div class="section-time">
+    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z"/><circle cx="14" cy="9" r="1" class="accent-fill"/></svg>
+    <span class="lang-nl">Reflectie</span><span class="lang-en">Reflection</span>
+  </div>
+  <h2>
+    <span class="lang-nl">De stad die nog moet komen</span>
+    <span class="lang-en">The city yet to come</span>
+  </h2>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Op de terugweg loopt de geschiedenis door naar de twintigste eeuw. In 1944 en 1945 bombardeerde de Britse luchtmacht de stad; kerken, Rathaus en pakhuizen liepen schade op. Op 1 mei 1945 capituleerde Stralsund aan de Sovjets. In de DDR werd de scheepswerf de grootste werkgever, terwijl de binnenstad langzaam verviel: geen geld, geen prioriteit, kerken dicht of als magazijn in gebruik.</p>
+    </div>
+    <div class="lang-en">
+      <p>On the way back, history continues into the twentieth century. In 1944 and 1945, the British air force bombed the city; churches, the Rathaus and warehouses were damaged. On 1 May 1945, Stralsund surrendered to the Soviets. Under the GDR, the shipyard became the biggest employer, while the old town slowly decayed: no money, no priority, churches closed or used as warehouses.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: gedenkplaat -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-gedenkplaat-bruhn.jpg" alt="Gedenkplaat Franz Bruhn, Hermann Voss en een onbekende Poolse burger" style="width:100%;aspect-ratio:3/2;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Gedenkplaat: Franz Bruhn, Hermann Voss en een onbekende Poolse burger, omgebracht door de nazijustitie</span>
+      <span class="lang-en">Memorial plaque: Franz Bruhn, Hermann Voss and an unknown Polish citizen, killed by Nazi justice</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Niet alle sporen zijn van steen en trots. Aan een bakstenen muur hangt een gedenkplaat die harder aankomt: in de voormalige gevangenis bracht de nazijustitie Franz Bruhn, Hermann Voss en een onbekende Poolse burger om het leven. "De doden manen ons: wij eren hun nagedachtenis," staat eronder. Vlak naast de gerestaureerde pracht ligt ook dat.</p>
+      <p>Na de hereniging kwam de restauratie op gang. In 2002 zette UNESCO de binnenstad op de Werelderfgoedlijst, samen met Wismar. Vandaag wonen er rond de vijfenvijftigduizend mensen en leeft de stad grotendeels van toerisme.</p>
+    </div>
+    <div class="lang-en">
+      <p>Not all traces are of stone and pride. On a brick wall hangs a memorial plaque that hits harder: in the former prison, Nazi justice killed Franz Bruhn, Hermann Voss and an unknown Polish citizen. "The dead warn us: we honour their memory," it reads. Right next to the restored splendour lies this, too.</p>
+      <p>After reunification, restoration began. In 2002, UNESCO placed the old town on the World Heritage List, together with Wismar. Today around fifty-five thousand people live here, and the city survives largely on tourism.</p>
+    </div>
+  </div>
+
+  <!-- Inline photo: Kütertor -->
+  <figure class="story-photo">
+    <img src="./img/stralsund-kuetertor.jpg" alt="Het Kütertor, middeleeuwse stadspoort met spits en vakwerkhuizen" style="width:100%;aspect-ratio:3/4;object-fit:cover;">
+    <figcaption>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><circle cx="12" cy="13" r="3"/></svg>
+      <span class="lang-nl">Het Kütertor, herbouwd in 1446: lantaarn, steile spits en tot 1862 een gevangenis</span>
+      <span class="lang-en">The Kütertor, rebuilt 1446: lantern, steep spire and a prison until 1862</span>
+    </figcaption>
+  </figure>
+
+  <div class="prose">
+    <div class="lang-nl">
+      <p>Via de Knieperstraße kom ik in het winkelgebied: het Strelapark, ketens, supermarkten. Vijf minuten van de Alter Markt, en een andere wereld. Monumentale Hanzestad én gewone provinciestad, tegelijk.</p>
+      <p>Dan sta ik weer op de Neuer Markt. De drie torens staan boven de daken. De wind komt van de Strelasund. Ergens, misschien, dat orgel.</p>
+    </div>
+    <div class="lang-en">
+      <p>Via the Knieperstraße I reach the shopping district: the Strelapark, chain stores, supermarkets. Five minutes from the Alter Markt, and another world. Monumental Hanseatic city and ordinary provincial town, simultaneously.</p>
+      <p>Then I'm back on the Neuer Markt. The three towers rise above the rooftops. The wind comes from the Strelasund. Somewhere, perhaps, that organ.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <div class="pq-label">
+      <svg viewBox="0 0 24 24"><path d="M2 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M12 4c2-1 5-1 7 0v15c-2-1-5-1-7 0z"/><path d="M9 4c1.5-0.5 2-0.5 3 0v15c-1-0.5-1.5-0.5-3 0z"/><line x1="5" y1="8" x2="8" y2="8" class="accent" stroke-width="1.2"/></svg>
+      <span class="lang-nl">Dagmotto</span><span class="lang-en">Day motto</span>
+    </div>
+    <blockquote>
+      <span class="lang-nl">Ook deze stad, hoe oud en hersteld ook, blijft niet; we kijken uit naar de stad die nog moet komen.</span>
+      <span class="lang-en">Even this city, however old and restored, will not endure; we look forward to the city yet to come.</span>
+    </blockquote>
+    <div class="pq-source">
+      <span class="lang-nl">— naar Hebreëen 13:14</span>
+      <span class="lang-en">— after Hebrews 13:14</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════ FOOTER NAV ════════════ -->
+  <nav class="day-nav">
+    <a href="./260626_Kamperen-op-Rugen.html">
+      <span class="lang-nl">&larr; Dag 1: Kamperen op Rügen</span>
+      <span class="lang-en">&larr; Day 1: Camping on Rügen</span>
+    </a>
+    <a href="./260630_Eiland-fietstocht.html">
+      <span class="lang-nl">Dag 3: Eiland fietstocht &rarr;</span>
+      <span class="lang-en">Day 3: Island bike tour &rarr;</span>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  // ── Language toggle ──
+  var NL_TITLE = 'Dag 2: Stralsund te voet';
+  var EN_TITLE = 'Day 2: Stralsund on foot';
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-nl').setAttribute('aria-pressed', lang === 'nl');
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+    document.title = lang === 'nl' ? NL_TITLE : EN_TITLE;
+    try { localStorage.setItem('reiz-lang', lang); } catch(e) {}
+  }
+  try {
+    var saved = localStorage.getItem('reiz-lang');
+    if (saved === 'en') setLang('en');
+  } catch(e) {}
+
+  // ── Smooth open/close animation for details elements ──
+  document.querySelectorAll('details').forEach(function(d) {
+    var summary = d.querySelector('summary');
+    var body = d.querySelector('.details-body');
+    summary.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (d.open) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        requestAnimationFrame(function() {
+          body.style.overflow = 'hidden';
+          body.style.transition = 'max-height 0.3s ease, padding 0.3s ease';
+          body.style.maxHeight = '0';
+          body.style.paddingTop = '0';
+          body.style.paddingBottom = '0';
+        });
+        setTimeout(function() { d.open = false; body.style = ''; }, 300);
+      } else {
+        d.open = true;
+        requestAnimationFrame(function() {
+          var h = body.scrollHeight;
+          body.style.maxHeight = '0';
+          body.style.overflow = 'hidden';
+          body.style.transition = 'max-height 0.3s ease';
+          requestAnimationFrame(function() { body.style.maxHeight = h + 'px'; });
+          setTimeout(function() { body.style = ''; }, 300);
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>
